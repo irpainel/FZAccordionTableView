@@ -207,7 +207,8 @@
     NSInteger section = NSNotFound;
     NSInteger minSection = 0;
     NSInteger maxSection = self.numberOfSections-1;
-    
+    NSLog(@"max section %ld", maxSection);
+
     CGRect headerViewFrame = headerView.frame;
     CGRect compareHeaderViewFrame;
     
