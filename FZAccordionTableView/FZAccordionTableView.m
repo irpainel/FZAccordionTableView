@@ -226,7 +226,7 @@
             maxSection = middleSection-1;
         }
     }
-    
+    NSLog(@"section %d lalalala", section)
     return section;
 }
 
