@@ -207,7 +207,6 @@
     NSInteger section = NSNotFound;
     NSInteger minSection = 0;
     NSInteger maxSection = self.numberOfSections-1;
-    NSLog(@"max section %ld", maxSection);
 
     CGRect headerViewFrame = headerView.frame;
     CGRect compareHeaderViewFrame;
@@ -215,26 +214,37 @@
     while (minSection <= maxSection) {
         NSInteger middleSection = (minSection+maxSection)/2;
         compareHeaderViewFrame = [self rectForHeaderInSection:middleSection];
-        if (CGRectEqualToRect(headerViewFrame, compareHeaderViewFrame)) {
+
+        if ([self compareRects:headerViewFrame rect2:compareHeaderViewFrame]){
             section = middleSection;
-            NSLog(@"middle section %ld", section);
             break;
         }
         else if (headerViewFrame.origin.y > compareHeaderViewFrame.origin.y) {
             minSection = middleSection+1;
             section = middleSection; // Occurs when headerView sticks to the top
-            NSLog(@"section %ld", section);
         }
         else {
             maxSection = middleSection-1;
-            NSLog(@"maxSection %ld", section);
         }
     }
-    NSLog(@"section %ld lalalala", section);
     return section;
 }
 
 #pragma mark - Private Utility Helpers -
+
+-(BOOL)compareRects:(CGRect)rect1 rect2:(CGRect)rect2 {
+    if ([self nearestDecimalNumber:rect1.origin.x] == [self nearestDecimalNumber:rect2.origin.x] &&
+        [self nearestDecimalNumber:rect1.origin.y] == [self nearestDecimalNumber:rect2.origin.y] &&
+        [self nearestDecimalNumber:rect1.size.height] == [self nearestDecimalNumber:rect2.size.height] &&
+        [self nearestDecimalNumber:rect1.size.width == rect2.size.width]) {
+        return YES;
+    }
+    return NO;
+}
+
+-(CGFloat)nearestDecimalNumber:(CGFloat)number {
+    return floorf(number * 100) / 100;
+}
 
 - (void)markSection:(NSInteger)section open:(BOOL)open {
     [self.sectionInfos[section] setOpen:open];
