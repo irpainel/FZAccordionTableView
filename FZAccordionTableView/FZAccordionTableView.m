@@ -216,17 +216,20 @@
         compareHeaderViewFrame = [self rectForHeaderInSection:middleSection];
         if (CGRectEqualToRect(headerViewFrame, compareHeaderViewFrame)) {
             section = middleSection;
+            NSLog(@"middle section %ld", section);
             break;
         }
         else if (headerViewFrame.origin.y > compareHeaderViewFrame.origin.y) {
             minSection = middleSection+1;
             section = middleSection; // Occurs when headerView sticks to the top
+            NSLog(@"section %ld", section);
         }
         else {
             maxSection = middleSection-1;
+            NSLog(@"maxSection %ld", section);
         }
     }
-    NSLog(@"section %d lalalala", section);
+    NSLog(@"section %ld lalalala", section);
     return section;
 }
 
